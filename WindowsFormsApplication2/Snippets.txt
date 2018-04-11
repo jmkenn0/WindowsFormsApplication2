@@ -1,0 +1,22 @@
+﻿bool firstline = true;
+
+                    while (!streamreaderTXT.EndOfStream)
+                    {
+
+                        //string[] inputstring = streamreaderTXT.ReadLine().Split(delimiter);
+                        string inputstring = streamreaderTXT.ReadLine();
+                        //skip if beginning of file with the header info if it exists
+                        // if (inputstring[6].Substring(0,3)  != "CM1")
+                        if (firstline)
+                        {
+                            fileHeaderRow[0] = dt[0].ToString();
+                            fileHeaderRow[1] = inputstring.ToString();
+                            fileHeaderRows.Rows.Add(fileHeaderRow);
+
+                            fileHeaderRow = fileHeaderRows.NewRow();
+                            //MessageBox.Show(dt[0].ToString() + "-" + inputstring.ToString());
+                            firstline = false;
+                             continue;
+
+
+
