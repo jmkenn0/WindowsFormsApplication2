@@ -83,6 +83,7 @@ namespace WindowsFormsApplication2
             int outputItem = 0;
             int outputItemPrev = 0;
             int counter = 0;
+            
 
             //identify "tab" as the column delimiter in the txt file
              char[] delimiter = new char[] { ',' , ';', '\t'};
@@ -119,6 +120,8 @@ namespace WindowsFormsApplication2
                     outputItemPrev = 0;
                     string version = "";
                     string versionPrev = "";
+                    string prevCMScheme = "";
+                    string prevKey = "";
                     ExtractRow = dtx.NewRow();
 
                     //bool firstline = true;
@@ -156,15 +159,15 @@ namespace WindowsFormsApplication2
                         } */
 
                         //convert item into integer for comparion on whether or not to create a new row
-                        outputItem = convertItem(inputstring[6]);
-                        version = inputstring[3].ToString();
+                       // outputItem = convertItem(inputstring[6]);
+                       // version = inputstring[3].ToString();
 
                         //if outputItemPrev=0 (indicating new file) or outputItem is less than or equal to outputItemPrev (indicating new row)
                         //create new row
-                        if (outputItem <= outputItemPrev || outputItemPrev == 0)
+                        if (prevKey=="" || inputstring[0] != prevKey)
                         {
 
-                            if (outputItem <= outputItemPrev || versionPrev!=version)
+                            if (prevKey!="")
                             {
                                 //dtx.Rows.Add(ExtractRow);
                                 ExtractRow = dtx.NewRow();
@@ -172,45 +175,44 @@ namespace WindowsFormsApplication2
                             //cut and paste
                             //cut and paste
                             //take # in column 41, and post it in the corresponding contribution margin column in the new row
-                            ExtractRow[inputstring[6].ToString()] = inverseString(inputstring[76].ToString());
+                            
 
 
                             
-                            ExtractRow["BUDAT - Posting Date"] = convertDate(inputstring[71].ToString(), inputstring[73].ToString());
-                            ExtractRow["FDAT - Invoice Date"] = convertDate(inputstring[71].ToString(), inputstring[73].ToString());
+                           
                             ExtractRow["BURKS - Company Code"] = inputstring[9].ToString();  //need to figure this piece out?
                             ExtractRow["VERSI - Version"] = inputstring[3].ToString();
                             ExtractRow["CPLYEAR - Planning Year"] = inputstring[4].ToString();
-                            ExtractRow["0FISCYEAR-Planning Year"] = inputstring[73].ToString();
-                            ExtractRow["WWPER - Fiscal Period"] = inputstring[70].ToString();
+                            
                             ExtractRow["CCOMPANY - Company"] = inputstring[8].ToString();
-                            //incorrect mapping
-                            ExtractRow["VBUND - Partner Company"] = inputstring[19].ToString();
+                            //not available
+                            ExtractRow["VBUND - Partner Company"] = inputstring[18].ToString();
                             ExtractRow["CFCH002620 - Item"] = "";
                             ExtractRow["KOKRS - Controlling Area"] = inputstring[10].ToString();
                             ExtractRow["PRCTR - Profit Center"] = inputstring[13].ToString();
                             ExtractRow["CPPRCTR - Partner Profit Center"] = inputstring[11].ToString();
-                            ExtractRow["WWBRN - Branch/Industry"] = inputstring[15].ToString();
+                            ExtractRow["WWBRN - Branch/Industry"] = inputstring[14].ToString();
+                            ExtractRow["WWBUN - BU"] = inputstring[15].ToString();
                             ExtractRow["WWPRG - Product Group"] = inputstring[36].ToString();
                             ExtractRow["WWPPG - Partner Product Group"] = inputstring[37].ToString();
                             ExtractRow["WWART - Material Number"] = inputstring[46].ToString();//
-                            ExtractRow["KUNWE - Ship-To (local)"] = inputstring[20].ToString();
+                            ExtractRow["KUNWE - Ship-To (local)"] = inputstring[19].ToString();
                             ExtractRow["KNDNR - Sold-To (local)"] = inputstring[28].ToString();
                             ExtractRow["KUNRE - Bill-To (local)"] = inputstring[32].ToString();
                             ExtractRow["KUNRG - Payer (local)"] = inputstring[34].ToString();
                             ExtractRow["WWKUN - Ship-To Final (local)"] = inputstring[24].ToString();
-                            ExtractRow["WWLWE - Country (Ship-To)"] = inputstring[21].ToString();
+                            ExtractRow["WWLWE - Country (Ship-To)"] = inputstring[20].ToString();
                             ExtractRow["LAND1 - Country (Sold-To)"] = inputstring[29].ToString();
                             ExtractRow["WWLRE - Country (Bill-To)"] = inputstring[33].ToString();
                             ExtractRow["WWLRG - Country (Payer)"] = inputstring[35].ToString();
                             ExtractRow["WWFCU - Country (Ship-To Final)"] = inputstring[25].ToString();
-                            ExtractRow["KSTRG - Cost object"] = inputstring[63].ToString();
+
+                            ExtractRow["KSTRG - Cost object"] = inputstring[60].ToString();
                             ExtractRow["WWKAF - Sales order"] = inputstring[64].ToString();
                             ExtractRow["KDPOS - Sales order item"] = inputstring[58].ToString();
                             ExtractRow["WWREN - CF invoice number"] = inputstring[63].ToString();
                             ExtractRow["CFCH00056 - Bill. Item"] = inputstring[59].ToString();//here
-                            //incorrect mapping
-                            ExtractRow["WWBUN - BU"] = inputstring[16].ToString();
+                           
                             ExtractRow["WWPST - Product Structure"] = inputstring[45].ToString();
                             ExtractRow["WWIDS - Identstring"] = inputstring[44].ToString();
                             ExtractRow["WWPRS - Product segment"] = inputstring[38].ToString();
@@ -221,11 +223,16 @@ namespace WindowsFormsApplication2
                             ExtractRow["WWEND - Final Form"] = inputstring[43].ToString();
                             ExtractRow["WWBRA - Brand"] = inputstring[55].ToString();
                             ExtractRow["MATKL - Material Group"] = inputstring[50].ToString();
-                            ExtractRow["FRWAE - Local Currency"] = inputstring[76].ToString();//probably different - wants type of currency, not value in local currency
+                            ExtractRow["BUDAT - Posting Date"] = convertDate(inputstring[71].ToString(), inputstring[72].ToString());
+                            ExtractRow["FDAT - Invoice Date"] = convertDate(inputstring[71].ToString(), inputstring[72].ToString());
+                            ExtractRow["FRWAE - Local Currency"] = //inputstring[76].ToString();//probably different - wants type of currency, not value in local currency
                             ExtractRow["MEINS - Sales Unit"] = "";//?
                             ExtractRow["ABSMG - Sales quantity"] = inputstring[74].ToString();
+                            ExtractRow[inputstring[6].ToString()] = inverseString(inputstring[76].ToString());
                             ExtractRow["VV230 - Sales Volume KG"] = inputstring[78].ToString();
                             ExtractRow["VV998 - Periodic Quantity SQM"] = inputstring[77].ToString();
+                            ExtractRow["0FISCYEAR-Planning Year"] = inputstring[73].ToString();
+                            ExtractRow["WWPER - Fiscal Period"] = inputstring[71].ToString();
 
                             dtx.Rows.Add(ExtractRow);
 
@@ -238,6 +245,7 @@ namespace WindowsFormsApplication2
                         outputItemPrev = outputItem;
                         versionPrev = version;
                         counter++;
+                        prevKey = inputstring[0].ToString();
                         
                     }
                 }
@@ -1267,6 +1275,182 @@ namespace WindowsFormsApplication2
             return i.ToString();
             
         }
+
+        //multi-file load for stream process
+        private void button3_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            //Stream myStream = null;
+            openFileDialog1.InitialDirectory = "C:\\Users'\'john.mark.kennedy'\'Documents'\'";
+            //openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 2;
+            openFileDialog1.RestoreDirectory = true;
+            openFileDialog1.Multiselect = true;
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                }
+
+
+            }
+
+            //DataTable outputtable = Form1.OutputDataTable1();
+            //loop through selection populating global string array varaible
+
+            DataRow fileArrayRow;
+
+            foreach (String file in openFileDialog1.FileNames)
+            {
+
+                fileArrayRow = fileArray.NewRow();
+                fileArrayRow[0] = file;
+                fileArray.Rows.Add(fileArrayRow);
+                //MessageBox.Show(fileArray.Rows[0][0].ToString());
+            }
+
+            //stop here
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            int counter = 0;
+            StreamReader streamreaderTXT;
+            char[] delimiter = new char[] { ',', ';', '\t' };
+            string path = "";
+            string outfile = "c:\\output\\";
+            StreamWriter streamWriterTXT;
+            DataRow ExtractRow;
+
+            using (DataTable dtx = OutputDataTable1())
+            {
+                foreach (DataRow dt in fileArray.Rows)
+                {
+                    counter++;
+                    streamreaderTXT = new StreamReader(dt[0].ToString());
+                    string[] inputstring = streamreaderTXT.ReadLine().Split(delimiter);
+                    path = Path.GetFileNameWithoutExtension(dt[0].ToString());
+                    string prevKey = "";
+                    ExtractRow = dtx.NewRow();
+
+                    // MessageBox.Show(outfile + path);
+                    streamWriterTXT = new StreamWriter(outfile + path + ".csv");
+                    //streamWriterTXT.WriteLine(String.Join(";", inputstring));
+                    //streamWriterTXT.WriteLine("here");
+
+
+                    while (!streamreaderTXT.EndOfStream)
+                    {
+                        inputstring = streamreaderTXT.ReadLine().Split(delimiter);
+                       // MessageBox
+                        //a key was added to align items - prevKey is the prior key value
+                        //if prevkey =="" signifies this is the beginning of the file
+                        //if the current key (position 0) is not equal to the previous key, this represents that the item is different and
+                        // a new row should be started.
+                        if (prevKey == "" || inputstring[0] != prevKey)
+                        {
+                            if (prevKey != "")
+                            {
+                                streamWriterTXT.WriteLine(String.Join(",", ExtractRow.ItemArray));
+                                dtx.Clear();
+                                ExtractRow = dtx.NewRow();
+
+                               
+                            }
+
+                            //adding to individual columns
+                            {
+                                ExtractRow["BURKS - Company Code"] = inputstring[9].ToString();  //need to figure this piece out?
+                                ExtractRow["VERSI - Version"] = inputstring[3].ToString();
+                                ExtractRow["CPLYEAR - Planning Year"] = inputstring[4].ToString();
+
+                                ExtractRow["CCOMPANY - Company"] = inputstring[8].ToString();
+                                //not available
+                                ExtractRow["VBUND - Partner Company"] = inputstring[18].ToString();
+                                ExtractRow["CFCH002620 - Item"] = "";
+                                ExtractRow["KOKRS - Controlling Area"] = inputstring[10].ToString();
+                                ExtractRow["PRCTR - Profit Center"] = inputstring[13].ToString();
+                                ExtractRow["CPPRCTR - Partner Profit Center"] = inputstring[11].ToString();
+                                ExtractRow["WWBRN - Branch/Industry"] = inputstring[14].ToString();
+                                ExtractRow["WWBUN - BU"] = inputstring[15].ToString();
+                                ExtractRow["WWPRG - Product Group"] = inputstring[36].ToString();
+                                ExtractRow["WWPPG - Partner Product Group"] = inputstring[37].ToString();
+                                ExtractRow["WWART - Material Number"] = inputstring[46].ToString();//
+                                ExtractRow["KUNWE - Ship-To (local)"] = inputstring[19].ToString();
+                                ExtractRow["KNDNR - Sold-To (local)"] = inputstring[28].ToString();
+                                ExtractRow["KUNRE - Bill-To (local)"] = inputstring[32].ToString();
+                                ExtractRow["KUNRG - Payer (local)"] = inputstring[34].ToString();
+                                ExtractRow["WWKUN - Ship-To Final (local)"] = inputstring[24].ToString();
+                                ExtractRow["WWLWE - Country (Ship-To)"] = inputstring[20].ToString();
+                                ExtractRow["LAND1 - Country (Sold-To)"] = inputstring[29].ToString();
+                                ExtractRow["WWLRE - Country (Bill-To)"] = inputstring[33].ToString();
+                                ExtractRow["WWLRG - Country (Payer)"] = inputstring[35].ToString();
+                                ExtractRow["WWFCU - Country (Ship-To Final)"] = inputstring[25].ToString();
+
+                                ExtractRow["KSTRG - Cost object"] = inputstring[60].ToString();
+                                ExtractRow["WWKAF - Sales order"] = inputstring[64].ToString();
+                                ExtractRow["KDPOS - Sales order item"] = inputstring[58].ToString();
+                                ExtractRow["WWREN - CF invoice number"] = inputstring[63].ToString();
+                                ExtractRow["CFCH00056 - Bill. Item"] = inputstring[59].ToString();//here
+
+                                ExtractRow["WWPST - Product Structure"] = inputstring[45].ToString();
+                                ExtractRow["WWIDS - Identstring"] = inputstring[44].ToString();
+                                ExtractRow["WWPRS - Product segment"] = inputstring[38].ToString();
+                                ExtractRow["WWHWK - Product characteristic"] = inputstring[39].ToString();
+                                ExtractRow["WWFTT - Lacquering"] = inputstring[40].ToString();
+                                ExtractRow["WWKAS- Coating"] = inputstring[41].ToString();
+                                ExtractRow["WWDRU - Print"] = inputstring[42].ToString();
+                                ExtractRow["WWEND - Final Form"] = inputstring[43].ToString();
+                                ExtractRow["WWBRA - Brand"] = inputstring[55].ToString();
+                                ExtractRow["MATKL - Material Group"] = inputstring[50].ToString();
+                                ExtractRow["BUDAT - Posting Date"] = convertDate(inputstring[71].ToString(), inputstring[73].ToString());
+                                ExtractRow["FDAT - Invoice Date"] = convertDate(inputstring[71].ToString(), inputstring[73].ToString());
+                                ExtractRow["FRWAE - Local Currency"] = //inputstring[76].ToString();//probably different - wants type of currency, not value in local currency
+                                ExtractRow["MEINS - Sales Unit"] = "";//?
+                                ExtractRow["ABSMG - Sales quantity"] = inputstring[74].ToString();
+                                ExtractRow[inputstring[6].ToString()] = inverseString(inputstring[76].ToString());
+                                ExtractRow["VV230 - Sales Volume KG"] = inputstring[78].ToString();
+                                ExtractRow["VV998 - Periodic Quantity SQM"] = inputstring[77].ToString();
+                                ExtractRow["0FISCYEAR-Planning Year"] = inputstring[73].ToString();
+                                ExtractRow["WWPER - Fiscal Period"] = inputstring[71].ToString();
+
+                                dtx.Rows.Add(ExtractRow);
+                            }
+                        }
+
+                        else
+                            ExtractRow[inputstring[6].ToString()] = inverseString(inputstring[76].ToString());
+
+                        counter++;
+                        prevKey = inputstring[0].ToString();
+
+                       
+
+                    }
+                    streamWriterTXT.WriteLine(String.Join(",", ExtractRow.ItemArray));
+                    streamWriterTXT.Close();
+
+                    MessageBox.Show("done");
+                }
+            }
+        }
+
+      /*  public static string returnString(DataTable dt)
+        {
+            string String1 = "";
+            foreach (DataColumn dc in dt.Columns)
+            {
+                String1+=dc
+            }
+            return "";
+        } */
     }
 
    
