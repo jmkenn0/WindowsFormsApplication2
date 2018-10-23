@@ -175,64 +175,85 @@ namespace WindowsFormsApplication2
                             //cut and paste
                             //cut and paste
                             //take # in column 41, and post it in the corresponding contribution margin column in the new row
-                            
 
+                            //71
+                            ExtractRow["BUDAT - Posting Date"] = convertDate(inputstring[71].ToString(), inputstring[72].ToString());
+                            ExtractRow["FDAT - Invoice Date"] = convertDate(inputstring[71].ToString(), inputstring[72].ToString());
 
-                            
-                           
-                            ExtractRow["BURKS - Company Code"] = inputstring[9].ToString();  //need to figure this piece out?
                             ExtractRow["VERSI - Version"] = inputstring[3].ToString();
-                            ExtractRow["CPLYEAR - Planning Year"] = inputstring[4].ToString();
-                            
-                            ExtractRow["CCOMPANY - Company"] = inputstring[8].ToString();
-                            //not available
-                            ExtractRow["VBUND - Partner Company"] = inputstring[18].ToString();
-                            ExtractRow["CFCH002620 - Item"] = "";
+                            ExtractRow["BURKS - Company Code"] = inputstring[9].ToString();
                             ExtractRow["KOKRS - Controlling Area"] = inputstring[10].ToString();
-                            ExtractRow["PRCTR - Profit Center"] = inputstring[13].ToString();
-                            ExtractRow["CPPRCTR - Partner Profit Center"] = inputstring[11].ToString();
+                            ExtractRow["TPCODE - Partner company code"] = inputstring[12].ToString();
                             ExtractRow["WWBRN - Branch/Industry"] = inputstring[14].ToString();
                             ExtractRow["WWBUN - BU"] = inputstring[15].ToString();
+                            ExtractRow["VBUND - Partner Company"] = inputstring[18].ToString();
+                            ExtractRow["KUNWE - Ship-To (local)"] = inputstring[19].ToString();
+                            ExtractRow["WWLWE - Country (Ship-To)"] = inputstring[20].ToString();
+                            ExtractRow["WWKUN - Ship-To Final (local)"] = inputstring[24].ToString();
+                            ExtractRow["WWFCU - Country (Ship-To Final)"] = inputstring[25].ToString();
+                            ExtractRow["KNDNR - Sold-To (local)"] = inputstring[28].ToString();
+                            ExtractRow["LAND1 - Country (Sold-To)"] = inputstring[29].ToString();
+                            ExtractRow["KUNRE - Bill-To (local)"] = inputstring[32].ToString();
+                            ExtractRow["WWLRE - Country (Bill-To)"] = inputstring[33].ToString();
+                            ExtractRow["KUNRG - Payer (local)"] = inputstring[34].ToString();
+                            ExtractRow["WWLRG - Country (Payer)"] = inputstring[35].ToString();
                             ExtractRow["WWPRG - Product Group"] = inputstring[36].ToString();
                             ExtractRow["WWPPG - Partner Product Group"] = inputstring[37].ToString();
-                            ExtractRow["WWART - Material Number"] = inputstring[46].ToString();//
-                            ExtractRow["KUNWE - Ship-To (local)"] = inputstring[19].ToString();
-                            ExtractRow["KNDNR - Sold-To (local)"] = inputstring[28].ToString();
-                            ExtractRow["KUNRE - Bill-To (local)"] = inputstring[32].ToString();
-                            ExtractRow["KUNRG - Payer (local)"] = inputstring[34].ToString();
-                            ExtractRow["WWKUN - Ship-To Final (local)"] = inputstring[24].ToString();
-                            ExtractRow["WWLWE - Country (Ship-To)"] = inputstring[20].ToString();
-                            ExtractRow["LAND1 - Country (Sold-To)"] = inputstring[29].ToString();
-                            ExtractRow["WWLRE - Country (Bill-To)"] = inputstring[33].ToString();
-                            ExtractRow["WWLRG - Country (Payer)"] = inputstring[35].ToString();
-                            ExtractRow["WWFCU - Country (Ship-To Final)"] = inputstring[25].ToString();
-
-                            ExtractRow["KSTRG - Cost object"] = inputstring[60].ToString();
-                            ExtractRow["WWKAF - Sales order"] = inputstring[64].ToString();
-                            ExtractRow["KDPOS - Sales order item"] = inputstring[58].ToString();
-                            ExtractRow["WWREN - CF invoice number"] = inputstring[63].ToString();
-                            ExtractRow["CFCH00056 - Bill. Item"] = inputstring[59].ToString();//here
-                           
-                            ExtractRow["WWPST - Product Structure"] = inputstring[45].ToString();
-                            ExtractRow["WWIDS - Identstring"] = inputstring[44].ToString();
                             ExtractRow["WWPRS - Product segment"] = inputstring[38].ToString();
                             ExtractRow["WWHWK - Product characteristic"] = inputstring[39].ToString();
                             ExtractRow["WWFTT - Lacquering"] = inputstring[40].ToString();
                             ExtractRow["WWKAS- Coating"] = inputstring[41].ToString();
                             ExtractRow["WWDRU - Print"] = inputstring[42].ToString();
                             ExtractRow["WWEND - Final Form"] = inputstring[43].ToString();
+                            ExtractRow["WWIDS - Identstring"] = inputstring[44].ToString();
+                            ExtractRow["WWPST - Product Structure"] = inputstring[45].ToString();
+                            ExtractRow["WWART - Material Number"] = inputstring[46].ToString().Trim(new char[] { '#' });//remove #
+                            ExtractRow["ASBGRP - Article Subgroup"] = inputstring[47].ToString();
+                            //ExtractRow["PRDORD - Production Order"] = inputstring[53].ToString();//WWFFA
+                            ExtractRow["CUBRCH - Customer Sector"] = inputstring[54].ToString();
                             ExtractRow["WWBRA - Brand"] = inputstring[55].ToString();
-                            ExtractRow["MATKL - Material Group"] = inputstring[50].ToString();
-                            ExtractRow["BUDAT - Posting Date"] = convertDate(inputstring[71].ToString(), inputstring[72].ToString());
-                            ExtractRow["FDAT - Invoice Date"] = convertDate(inputstring[71].ToString(), inputstring[72].ToString());
-                            ExtractRow["FRWAE - Local Currency"] = //inputstring[76].ToString();//probably different - wants type of currency, not value in local currency
-                            ExtractRow["MEINS - Sales Unit"] = "";//?
+                            ExtractRow["KDPOS - Sales order item"] = inputstring[58].ToString();
+                            ExtractRow["CFCH00056 - Bill. Item"] = inputstring[59].ToString();//WWKAF
+                            //ExtractRow["CFORDN - CF Order number"] = inputstring[59].ToString();
+                            ExtractRow["WWREN - CF invoice number"] = inputstring[64].ToString();
                             ExtractRow["ABSMG - Sales quantity"] = inputstring[74].ToString();
                             ExtractRow[inputstring[6].ToString()] = inverseString(inputstring[76].ToString());
-                            ExtractRow["VV230 - Sales Volume KG"] = inputstring[78].ToString();
-                            ExtractRow["VV998 - Periodic Quantity SQM"] = inputstring[77].ToString();
-                            ExtractRow["0FISCYEAR-Planning Year"] = inputstring[73].ToString();
                             ExtractRow["WWPER - Fiscal Period"] = inputstring[71].ToString();
+                            ExtractRow["0FISCYEAR-Planning Year"] = inputstring[73].ToString();
+                            ExtractRow["CALEYR - Fiscal Year"] = inputstring[73].ToString();
+                            ExtractRow["VV998 - Periodic Quantity SQM"] = inputstring[77].ToString();
+
+                            ExtractRow["VV230 - Sales Volume KG"] = inputstring[78].ToString();
+
+
+
+
+
+                            // ExtractRow["CPLYEAR - Planning Year"] = inputstring[4].ToString();
+
+                            //ExtractRow["CFCH002620 - Item"] = "";
+                            //ExtractRow["CCOMPANY - Company"] = inputstring[8].ToString();
+                            //ExtractRow["PRCTR - Profit Center"] = inputstring[13].ToString();
+                            //                            ExtractRow["KSTRG - Cost object"] = inputstring[60].ToString();
+                            //                          = inputstring[64].ToString();
+                            // ExtractRow["MATKL - Material Group"] = inputstring[50].ToString();
+                            // ExtractRow["FRWAE - Local Currency"] =
+                            //                            ExtractRow["MEINS - Sales Unit"] = "";//?
+                            // ExtractRow["CPPRCTR - Partner Profit Center"] = inputstring[11].ToString();
+                            //                          
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                             dtx.Rows.Add(ExtractRow);
 
@@ -1215,6 +1236,48 @@ namespace WindowsFormsApplication2
             OutputColumn = new DataColumn();
             OutputColumn.DataType = System.Type.GetType("System.String");
             OutputColumn.ColumnName = "VV998 - Periodic Quantity SQM";
+            OutputColumn.DefaultValue = "0";
+            dt.Columns.Add(OutputColumn);
+
+            //0FISCYEAR
+            OutputColumn = new DataColumn();
+            OutputColumn.DataType = System.Type.GetType("System.String");
+            OutputColumn.ColumnName = "0FISCYEAR - Fiscal Year";
+            OutputColumn.DefaultValue = "0";
+            dt.Columns.Add(OutputColumn);
+
+            //PRDORD - Production Order
+            OutputColumn = new DataColumn();
+            OutputColumn.DataType = System.Type.GetType("System.String");
+            OutputColumn.ColumnName = "PRDORD - Production Order";
+            OutputColumn.DefaultValue = "0";
+            dt.Columns.Add(OutputColumn);
+
+            //CFORDN - CF Order number
+            OutputColumn = new DataColumn();
+            OutputColumn.DataType = System.Type.GetType("System.String");
+            OutputColumn.ColumnName = "CFORDN - CF Order number";
+            OutputColumn.DefaultValue = "0";
+            dt.Columns.Add(OutputColumn);
+
+            //CUBRCH - Customer Sector
+            OutputColumn = new DataColumn();
+            OutputColumn.DataType = System.Type.GetType("System.String");
+            OutputColumn.ColumnName = "CUBRCH - Customer Sector";
+            OutputColumn.DefaultValue = "0";
+            dt.Columns.Add(OutputColumn);
+
+            //ASBGRP - Article Subgroup
+            OutputColumn = new DataColumn();
+            OutputColumn.DataType = System.Type.GetType("System.String");
+            OutputColumn.ColumnName = "ASBGRP - Article Subgroup";
+            OutputColumn.DefaultValue = "0";
+            dt.Columns.Add(OutputColumn);
+
+            //TPCODE - Partner company code
+            OutputColumn = new DataColumn();
+            OutputColumn.DataType = System.Type.GetType("System.String");
+            OutputColumn.ColumnName = "TPCODE - Partner company code";
             OutputColumn.DefaultValue = "0";
             dt.Columns.Add(OutputColumn);
 
